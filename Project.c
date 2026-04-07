@@ -153,27 +153,68 @@ void addCustomer() {
     fgets(customers[count].address, 100, stdin);
     customers[count].address[strcspn(customers[count].address, "\n")] = '\0';
 
-    int mc;
-    printf("Number of Meters (1-%d): ", MAX_METERS);
-    if (scanf("%d", &mc) != 1 || mc < 1 || mc > MAX_METERS) {
-        printf("[ERROR] Must be 1 to %d.\n", MAX_METERS);
-        clearBuf(); return;
+    // int mc;
+    // printf("Number of Meters (1-%d): ", MAX_METERS);
+    // if (scanf("%d", &mc) != 1 || mc < 1 || mc > MAX_METERS) {
+    //     printf("[ERROR] Must be 1 to %d.\n", MAX_METERS);
+    //     clearBuf(); return;
+    // }
+    // customers[count].meter_count = mc;
+
+    // for (int i = 0; i < mc; i++) {
+    //     printf("\n  -- Meter %d --\n", i + 1);
+    //     printf("    Meter ID          : "); scanf("%d", &customers[count].meters[i].meter_id);
+    //     printf("    Previous Reading  : "); scanf("%f", &customers[count].meters[i].prev_reading);
+    //     printf("    Current  Reading  : "); scanf("%f", &customers[count].meters[i].curr_reading);
+
+    //     float u = customers[count].meters[i].curr_reading
+    //             - customers[count].meters[i].prev_reading;
+    //     if (u < 0) { printf("    [WARNING] Current < Previous. Units = 0.\n"); u = 0; }
+    //     customers[count].meters[i].units = u;
+    //     customers[count].meters[i].bill  = 0.0f;
+    // }
+
+    int meterIndex = 0;
+char choice;
+
+do {
+    if (meterIndex >= MAX_METERS) {
+        printf("\n[INFO] Maximum %d meters reached!\n", MAX_METERS);
+        break;
     }
-    customers[count].meter_count = mc;
 
-    for (int i = 0; i < mc; i++) {
-        printf("\n  -- Meter %d --\n", i + 1);
-        printf("    Meter ID          : "); scanf("%d", &customers[count].meters[i].meter_id);
-        printf("    Previous Reading  : "); scanf("%f", &customers[count].meters[i].prev_reading);
-        printf("    Current  Reading  : "); scanf("%f", &customers[count].meters[i].curr_reading);
+    printf("\n  -- Meter %d --\n", meterIndex + 1);
 
-        float u = customers[count].meters[i].curr_reading
-                - customers[count].meters[i].prev_reading;
-        if (u < 0) { printf("    [WARNING] Current < Previous. Units = 0.\n"); u = 0; }
-        customers[count].meters[i].units = u;
-        customers[count].meters[i].bill  = 0.0f;
+    printf("    Meter ID          : ");
+    scanf("%d", &customers[count].meters[meterIndex].meter_id);
+
+    printf("    Previous Reading  : ");
+    scanf("%f", &customers[count].meters[meterIndex].prev_reading);
+
+    printf("    Current  Reading  : ");
+    scanf("%f", &customers[count].meters[meterIndex].curr_reading);
+
+    float u = customers[count].meters[meterIndex].curr_reading
+            - customers[count].meters[meterIndex].prev_reading;
+
+    if (u < 0) {
+        printf("    [WARNING] Current < Previous. Units = 0.\n");
+        u = 0;
     }
 
+    customers[count].meters[meterIndex].units = u;
+    customers[count].meters[meterIndex].bill  = 0.0f;
+
+    meterIndex++;
+
+    // ask user
+    printf("\nDo you want to add another meter? (y/n): ");
+    scanf(" %c", &choice);   // space before %c important!
+
+} while (choice == 'y' || choice == 'Y');
+
+// finally set meter count
+customers[count].meter_count = meterIndex;
     count++;
     printf("\n[OK] Customer added successfully!\n");
     saveToFile();
@@ -335,8 +376,8 @@ int main() {
         printf("3. Calculate Bill\n");
         printf("4. Search Customer\n");
         printf("5. Delete Customer\n");
-        printf("6. Save Data Manually\n");
-        printf("7. Exit\n");
+        // printf("6. Save Data Manually\n");
+        printf("6. Exit\n");
         printf("Enter choice: ");
 
         if (scanf("%d", &choice) != 1) {
