@@ -1,0 +1,19 @@
+# Electricity Bill Management System - Customer Database
+# DO NOT edit manually unless you know the format.
+TOTAL_CUSTOMERS=1
+
+[CUSTOMER]
+customer_id=120
+name=Md Rahim
+address=Dhaka
+meter_count=1
+last_total_bill=28250.00
+  [METER_1]
+  meter_id=2
+  prev_reading=332.00
+  curr_reading=3432.00
+  units=3100.00
+  bill=28200.00
+  [/METER_1]
+[/CUSTOMER]
+
