@@ -437,6 +437,8 @@ void viewAllCustomers()
 
     for (int i = 0; i < count; i++)
     {
+        int billCalculated = (customers[i].last_total_bill > 0);  // ← key flag
+
         printf("\n+----------------------------------------------+\n");
         printf("  Customer #%-3d  ID: %d\n", i + 1, customers[i].customer_id);
         printf("  Name    : %s\n", customers[i].name);
@@ -446,18 +448,29 @@ void viewAllCustomers()
         for (int j = 0; j < customers[i].meter_count; j++)
         {
             Meter *m = &customers[i].meters[j];
-            printf("  |- Meter %d (ID:%d)  Prev:%.2f  Curr:%.2f  Units:%.2f  Bill:BDT %.2f\n",
-                   j + 1, m->meter_id, m->prev_reading, m->curr_reading, m->units, m->bill);
+
+            if (billCalculated)
+            {
+                // Bill calculated — show everything
+                printf("  |- Meter %d (ID:%d)  Prev:%.2f  Curr:%.2f  Units:%.2f  Bill:BDT %.2f\n",
+                       j + 1, m->meter_id, m->prev_reading, m->curr_reading, m->units, m->bill);
+            }
+            else
+            {
+                // Bill NOT yet calculated — hide bill & units
+                printf("  |- Meter %d (ID:%d)  Prev:%.2f  Curr:%.2f  [Bill: Not Calculated]\n",
+                       j + 1, m->meter_id, m->prev_reading, m->curr_reading);
+            }
         }
-        if (customers[i].last_total_bill > 0)
+
+        if (billCalculated)
             printf("  Last Total Bill : BDT %.2f\n", customers[i].last_total_bill);
+        else
+            printf("  Last Total Bill : [Not Calculated Yet]\n");
+
         printf("+----------------------------------------------+\n");
     }
-
-    /* also write a readable report file */
-    // exportAllCustomersReport();
 }
-
 /* ════════════════════════════════════════════════
    3. CALCULATE BILL  (tiered + service charge)
    ════════════════════════════════════════════════ */

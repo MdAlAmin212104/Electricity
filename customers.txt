@@ -1,6 +1,6 @@
 # Electricity Bill Management System - Customer Database
 # DO NOT edit manually unless you know the format.
-TOTAL_CUSTOMERS=1
+TOTAL_CUSTOMERS=4
 
 [CUSTOMER]
 customer_id=120
@@ -14,6 +14,58 @@ last_total_bill=28250.00
   curr_reading=3432.00
   units=3100.00
   bill=28200.00
+  [/METER_1]
+[/CUSTOMER]
+
+[CUSTOMER]
+customer_id=101
+name=Karim
+address=Dghaka
+meter_count=2
+last_total_bill=918.00
+  [METER_1]
+  meter_id=1
+  prev_reading=200.00
+  curr_reading=320.00
+  units=120.00
+  bill=520.00
+  [/METER_1]
+  [METER_2]
+  meter_id=102
+  prev_reading=234.00
+  curr_reading=321.00
+  units=87.00
+  bill=348.00
+  [/METER_2]
+[/CUSTOMER]
+
+[CUSTOMER]
+customer_id=23
+name=Ali
+address=Dhaka
+meter_count=1
+last_total_bill=134.00
+  [METER_1]
+  meter_id=123
+  prev_reading=0.00
+  curr_reading=21.00
+  units=21.00
+  bill=84.00
+  [/METER_1]
+[/CUSTOMER]
+
+[CUSTOMER]
+customer_id=24
+name=Joni
+address=Dhaka
+meter_count=1
+last_total_bill=0.00
+  [METER_1]
+  meter_id=12
+  prev_reading=0.00
+  curr_reading=322.00
+  units=322.00
+  bill=0.00
   [/METER_1]
 [/CUSTOMER]
 
